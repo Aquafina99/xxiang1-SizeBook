@@ -18,18 +18,20 @@
         android:id="@+id/record_lists"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="0.93"
         android:scrollbars="vertical" />
 
 
     <Button
-        android:layout_width="wrap_content"
+        android:id="@+id/add"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:onClick="add_new"
-        android:background="#3385FF"
+        android:background="#0077CC"
         android:textColor="#FFFFFF"
         android:text="Add" />
+
 
 
 </LinearLayout>
