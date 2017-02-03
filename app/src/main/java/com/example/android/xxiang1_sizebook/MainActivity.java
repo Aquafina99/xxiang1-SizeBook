@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView historyList;
 
-    private ArrayList<Person> recordList = new ArrayList<>();
+    private ArrayList<Person> PersonList = new ArrayList<>();
     private ArrayAdapter<Person> adapter;
 
 
@@ -51,13 +51,22 @@ public class MainActivity extends AppCompatActivity {
         //list view for all history record
         historyList = (ListView) findViewById(R.id.record_lists);
 
-        //set up Add Button to open RecordActivity
+        //set up Add Button to open AddPerson Activity
         Button addNew = (Button) findViewById(R.id.add);
         addNew.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, RecordActivity.class);
+                Intent intent = new Intent(MainActivity.this, AddPerson.class);
                 startActivity(intent);
+            }
+        });
+
+
+        historyList.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+
+                return false;
             }
         });
 
@@ -66,20 +75,63 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-        adapter = new ArrayAdapter<Person>(this, R.layout.activity_main, recordList);
-        historyList.setAdapter(adapter);
 
+        loadFromFile();
+
+        adapter = new ArrayAdapter<Person>(this, R.layout.activity_main, PersonList);
+
+        historyList.setAdapter(adapter);
     }
 
 
     @Override
     protected void onResume(){
         super.onResume();
-        recordList.clear();
+        PersonList.clear();
 
     }
 
+    private void loadFromFile() {
+        try {
+            FileInputStream fis = openFileInput(FILENAME);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
 
+            Gson gson = new Gson();
+
+            //Taken from http://stackoverflow.com/questions/12384064/gson-convert-from-json-to-a-typed-arraylistt
+            // 2017-02-02 23:36
+            Type listType = new TypeToken<ArrayList<Person>>(){}.getType();
+            PersonList = gson.fromJson(in, listType);
+            adapter.clear();
+            adapter.addAll(PersonList);
+            adapter.notifyDataSetChanged();
+            fis.close();
+
+        } catch (FileNotFoundException e) {
+            PersonList = new ArrayList<Person>();
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    private void saveInFile() {
+        try {
+            FileOutputStream fos = openFileOutput(FILENAME,
+                    Context.MODE_PRIVATE);
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
+
+            Gson gson = new Gson();
+            gson.toJson(PersonList, out);
+            out.flush();
+
+            fos.close();
+        } catch (FileNotFoundException e) {
+            // TODO: Handle the Exception properly later
+            throw new RuntimeException();
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
+    }
 
 
 }
