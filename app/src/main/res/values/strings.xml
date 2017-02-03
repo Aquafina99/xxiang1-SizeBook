@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">xxiang1-SizeBook</string>
     <string name="add_button">Create</string>
+    <string name="title_activity_edit_person">EditPerson</string>
 </resources>
