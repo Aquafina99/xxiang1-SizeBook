@@ -1,8 +1,11 @@
 package com.example.android.xxiang1_sizebook;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.icu.text.AlphabeticIndex;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -14,7 +17,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
 
@@ -30,11 +32,7 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-/**
- * Created by ceciliaxiang on 2017-02-01.
- */
-
-public class RecordActivity extends AppCompatActivity {
+public class Editor extends AppCompatActivity {
 
     private ArrayList<Person> recordList = new ArrayList<>();
     private Calendar addedDate;
@@ -53,7 +51,7 @@ public class RecordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_editor);
+        setContentView(R.layout.activity_editor2);
 
         // Find the views that we will need to read user input from
         nameEditText= (EditText) findViewById(R.id.name_view);
@@ -67,8 +65,5 @@ public class RecordActivity extends AppCompatActivity {
         commentEditText = (EditText) findViewById(R.id.comment_view);
 
         doneButton = (Button) findViewById(R.id.Done);
-
-
     }
-
 }

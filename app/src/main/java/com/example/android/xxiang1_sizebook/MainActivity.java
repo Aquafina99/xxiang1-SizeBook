@@ -51,12 +51,12 @@ public class MainActivity extends AppCompatActivity {
         //list view for all history record
         historyList = (ListView) findViewById(R.id.record_lists);
 
-        //set up Add Button to open RecordActivity
+        //set up Add Button to open Editor Activity
         Button addNew = (Button) findViewById(R.id.add);
         addNew.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, RecordActivity.class);
+                Intent intent = new Intent(MainActivity.this, Editor.class);
                 startActivity(intent);
             }
         });
