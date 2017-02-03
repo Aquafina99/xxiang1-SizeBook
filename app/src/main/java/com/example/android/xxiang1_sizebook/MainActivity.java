@@ -51,12 +51,20 @@ public class MainActivity extends AppCompatActivity {
         //list view for all history record
         historyList = (ListView) findViewById(R.id.record_lists);
 
+<<<<<<< HEAD
         //set up Add Button to open AddPerson Activity
+=======
+        //set up Add Button to open Editor Activity
+>>>>>>> 80608d3865fc6f86254d24ccfa529d90480e78af
         Button addNew = (Button) findViewById(R.id.add);
         addNew.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View view) {
+<<<<<<< HEAD
                 Intent intent = new Intent(MainActivity.this, AddPerson.class);
+=======
+                Intent intent = new Intent(MainActivity.this, Editor.class);
+>>>>>>> 80608d3865fc6f86254d24ccfa529d90480e78af
                 startActivity(intent);
             }
         });
