@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,6 +29,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Person> PersonList = new ArrayList<>();
     private ArrayAdapter<Person> adapter;
 
+    private static final int ADD_PERSON_RESULT_CODE = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,32 +55,43 @@ public class MainActivity extends AppCompatActivity {
         //list view for all history record
         historyList = (ListView) findViewById(R.id.record_lists);
 
-<<<<<<< HEAD
         //set up Add Button to open AddPerson Activity
-=======
-        //set up Add Button to open Editor Activity
->>>>>>> 80608d3865fc6f86254d24ccfa529d90480e78af
         Button addNew = (Button) findViewById(R.id.add);
         addNew.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View view) {
-<<<<<<< HEAD
                 Intent intent = new Intent(MainActivity.this, AddPerson.class);
-=======
-                Intent intent = new Intent(MainActivity.this, Editor.class);
->>>>>>> 80608d3865fc6f86254d24ccfa529d90480e78af
-                startActivity(intent);
+                startActivityForResult(intent, 0);
             }
         });
 
-
-        historyList.setOnLongClickListener(new View.OnLongClickListener() {
+        historyList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onLongClick(View view) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                Intent intent = new Intent(MainActivity.this, ViewPerson.class);
+                intent.putExtra("ViewPerson", (Serializable) historyList.getItemIdAtPosition(pos));
+                intent.putExtra("key", pos);
+                startActivity(intent);
 
-                return false;
             }
         });
+
+
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 0){
+            if (resultCode == MainActivity.RESULT_OK){
+                Person person = (Person)data.getExtras().getSerializable("newPerson");
+                PersonList.add(person);
+                adapter.notifyDataSetChanged();
+                saveInFile();
+
+            }
+        }
 
     }
 
@@ -84,18 +99,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
 
-        loadFromFile();
-
-        adapter = new ArrayAdapter<Person>(this, R.layout.activity_main, PersonList);
-
+        adapter = new ArrayAdapter<Person>(this, R.layout.entry, PersonList);
         historyList.setAdapter(adapter);
-    }
-
-
-    @Override
-    protected void onResume(){
-        super.onResume();
-        PersonList.clear();
+        loadFromFile();
 
     }
 
@@ -108,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
             //Taken from http://stackoverflow.com/questions/12384064/gson-convert-from-json-to-a-typed-arraylistt
             // 2017-02-02 23:36
+
             Type listType = new TypeToken<ArrayList<Person>>(){}.getType();
             PersonList = gson.fromJson(in, listType);
             adapter.clear();

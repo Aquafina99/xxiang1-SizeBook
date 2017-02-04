@@ -15,12 +15,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
         <activity android:name=".AddPerson" />
-        <activity android:name=".EditPerson"></activity>
-=======
-        <activity android:name=".Editor"></activity>
->>>>>>> 80608d3865fc6f86254d24ccfa529d90480e78af
+        <activity android:name=".EditPerson" />
+        <activity android:name=".ViewPerson"></activity>
     </application>
 
 </manifest>

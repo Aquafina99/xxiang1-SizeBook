@@ -1,11 +1,12 @@
 package com.example.android.xxiang1_sizebook;
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
  * Created by ceciliaxiang on 2017-01-31.
  */
 
-public class Person {
+public class Person implements Serializable{
     private String name;
     private  Calendar date;
     private double neck;
@@ -16,29 +17,14 @@ public class Person {
     private double inseam;
     private String comment;
 
-    //constructor
     public Person(){
 
     }
 
     //constructor with name to be required field
-    public Person(String name, Calendar date, double neck, double bust,
-                  double chest, double waist, double hip, double inseam, String comment)
-            throws InvalidPersonException{
-
-        if (name.isEmpty()){
-            throw new InvalidPersonException();
-        }
+    public Person(String name){
 
         this.name = name;
-        this.date = date;
-        this.neck = neck;
-        this.bust = bust;
-        this.chest = chest;
-        this.waist = waist;
-        this.hip = hip;
-        this.inseam = inseam;
-        this.comment = comment;
     }
 
 

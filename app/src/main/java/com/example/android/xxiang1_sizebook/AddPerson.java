@@ -1,6 +1,7 @@
 package com.example.android.xxiang1_sizebook;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,7 +10,17 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
@@ -20,7 +31,6 @@ import com.google.gson.reflect.TypeToken;
 
 public class AddPerson extends AppCompatActivity {
 
-    String FILENAME = "people.txt";
 
     Person person = new Person();
 
@@ -30,6 +40,7 @@ public class AddPerson extends AppCompatActivity {
 
     private EditText nameEditText;
     private EditText dateEditText;
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MMM-dd");
     private EditText neckEditText;
     private EditText bustEditText;
     private EditText chestEditText;
@@ -38,6 +49,7 @@ public class AddPerson extends AppCompatActivity {
     private EditText inseamEditText;
     private EditText commentEditText;
     private Button doneButton;
+
 
     private int year, month, day;
 
@@ -52,11 +64,11 @@ public class AddPerson extends AppCompatActivity {
 
         dateEditText.setFocusable(false);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MMM-dd");
-        dateEditText.setHint("Date (Default: " + sdf.format(addDate.getTime()) + ")");
 
-//source: Android - Date Picker
-// https://www.tutorialspoint.com/android/android_datepicker_control.html
+        //dateEditText.setHint("Date (Default: " + sdf.format(addDate.getTime()) + ")");
+
+        //source: Android - Date Picker
+        // https://www.tutorialspoint.com/android/android_datepicker_control.html
         year = addDate.get(Calendar.YEAR);
         month = addDate.get(Calendar.MONTH);
         day = addDate.get(Calendar.DAY_OF_MONTH);
@@ -72,8 +84,8 @@ public class AddPerson extends AppCompatActivity {
 
         doneButton = (Button) findViewById(R.id.Done);
 
-//source: Android - Date Picker
-// https://www.tutorialspoint.com/android/android_datepicker_control.html
+        //source: Android - Date Picker
+        // https://www.tutorialspoint.com/android/android_datepicker_control.html
         dateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,8 +107,8 @@ public class AddPerson extends AppCompatActivity {
 
 
     }
-//source: Android - Date Picker
-// https://www.tutorialspoint.com/android/android_datepicker_control.html
+    //source: Android - Date Picker
+    // https://www.tutorialspoint.com/android/android_datepicker_control.html
     private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -109,21 +121,53 @@ public class AddPerson extends AppCompatActivity {
 
 
     protected void generateRecord(){
-        Intent intent = new Intent(this, MainActivity.class);
 
-        String name = nameEditText.getText().toString();
+
         Person newPerson = new Person();
 
-        Gson gson = new Gson();
+        String name = nameEditText.getText().toString();
+        double neck = toDouble(neckEditText.getText().toString());
+        double bust = toDouble(neckEditText.getText().toString());
+        double chest = toDouble(neckEditText.getText().toString());
+        double waist = toDouble(neckEditText.getText().toString());
+        double hip = toDouble(neckEditText.getText().toString());
+        double inseam = toDouble(neckEditText.getText().toString());
+        String comment = neckEditText.getText().toString();
 
 
         if (name.isEmpty()){
             nameEditText.setError("Name can't be empty");
         }
 
+        newPerson.setName(name);
+        newPerson.setDate(addDate);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MMM-dd");
+        newPerson.setNeck(neck);
+        newPerson.setBust(bust);
+        newPerson.setChest(chest);
+        newPerson.setWaist(waist);
+        newPerson.setHip(hip);
+        newPerson.setInseam(inseam);
+        newPerson.setComment(comment);
 
+        Intent intent = new Intent();
+        intent.putExtra("newPerson", newPerson);
+        setResult(MainActivity.RESULT_OK, intent);
+
+        finish();
 
         }
+
+    //http://stackoverflow.com/questions/6866633/converting-string-to-double-in-android
+    //Author: Izkata
+    //From 2017-02-03 05:00
+    private double toDouble(String s){
+        double d = Double.parseDouble(s);
+        DecimalFormat df = new DecimalFormat("#.00");
+        d = Double.valueOf(df.format(d));
+        return d;
+    }
+
 
 
 
