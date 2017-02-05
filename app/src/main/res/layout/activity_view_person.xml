@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_add_person"
+    android:id="@+id/activity_view_person"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.android.xxiang1_sizebook.AddPerson">
+    tools:context="com.example.android.xxiang1_sizebook.ViewPerson">
 
     <!-- Name -->
     <LinearLayout
@@ -17,7 +17,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
-
 
         <TextView
             android:text="Name"
@@ -32,12 +31,11 @@
             android:orientation="vertical">
 
             <!-- Name Input -->
-            <EditText
-                android:id="@+id/name_view"
+            <TextView
+                android:id="@+id/show_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Name"
-                android:inputType="textMultiLine" />
+                />
 
         </LinearLayout>
     </LinearLayout>
@@ -63,12 +61,10 @@
             android:orientation="vertical">
 
             <!-- Date Input -->
-            <EditText
-                android:id="@+id/date_view"
-                android:inputType="date"
+            <TextView
+                android:id="@+id/show_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="yyyy-mm-dd"
                 />
 
         </LinearLayout>
@@ -93,16 +89,17 @@
             android:paddingLeft="4dp">
 
             <!-- Input Neck -->
-            <EditText
-                android:id="@+id/edit_neck"
-                android:hint="Neck"
-                android:inputType="numberDecimal"
-                style="@style/FieldStyle" />
 
             <!-- Units(inches) -->
             <TextView
                 android:text="inches"
                 style="@style/UnitsStyle"/>
+
+            <TextView
+                android:id="@+id/show_neck"
+                style="@style/FieldStyle"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -125,10 +122,8 @@
             android:paddingLeft="4dp">
 
             <!-- Bust Input -->
-            <EditText
-                android:id="@+id/edit_bust"
-                android:hint="Bust"
-                android:inputType="numberDecimal"
+            <TextView
+                android:id="@+id/show_bust"
                 style="@style/FieldStyle" />
 
             <!-- Units (inches) -->
@@ -158,10 +153,8 @@
             android:paddingLeft="4dp">
 
             <!-- Chest Input -->
-            <EditText
-                android:id="@+id/edit_chest"
-                android:hint="Chest"
-                android:inputType="numberDecimal"
+            <TextView
+                android:id="@+id/show_chest"
                 style="@style/FieldStyle" />
 
             <!-- Units (Inches) -->
@@ -190,10 +183,8 @@
             android:paddingLeft="4dp">
 
             <!-- Waist Input -->
-            <EditText
-                android:id="@+id/edit_waist"
-                android:hint="Waist"
-                android:inputType="numberDecimal"
+            <TextView
+                android:id="@+id/show_waist"
                 style="@style/FieldStyle" />
 
             <!-- Units (inches) -->
@@ -222,10 +213,8 @@
             android:paddingLeft="4dp">
 
             <!-- Hip Input  -->
-            <EditText
-                android:id="@+id/edit_hip"
-                android:hint="Hip"
-                android:inputType="numberDecimal"
+            <TextView
+                android:id="@+id/show_hip"
                 style="@style/FieldStyle" />
 
             <!-- Units (inches) -->
@@ -254,10 +243,8 @@
             android:paddingLeft="4dp">
 
             <!-- Inseam Input -->
-            <EditText
-                android:id="@+id/edit_inseam"
-                android:hint="Inseam"
-                android:inputType="numberDecimal"
+            <TextView
+                android:id="@+id/show_inseam"
                 style="@style/FieldStyle" />
 
             <!-- Units (inches) -->
@@ -287,12 +274,11 @@
             android:orientation="vertical">
 
             <!-- Comment Input -->
-            <EditText
-                android:id="@+id/comment_view"
+            <TextView
+                android:id="@+id/show_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Comment"
-                android:inputType="textMultiLine" />
+                 />
 
         </LinearLayout>
 

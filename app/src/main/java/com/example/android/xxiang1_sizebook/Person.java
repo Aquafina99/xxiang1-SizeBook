@@ -21,11 +21,6 @@ public class Person implements Serializable{
 
     }
 
-    //constructor with name to be required field
-    public Person(String name){
-
-        this.name = name;
-    }
 
 
     public String getName() {

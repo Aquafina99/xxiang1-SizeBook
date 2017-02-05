@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.icu.text.AlphabeticIndex;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import java.io.BufferedReader;
@@ -34,6 +37,8 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import static android.os.Build.VERSION_CODES.M;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -41,10 +46,16 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView historyList;
 
+    int longClickedItemIndex;
     private ArrayList<Person> PersonList = new ArrayList<>();
     private ArrayAdapter<Person> adapter;
 
     private static final int ADD_PERSON_RESULT_CODE = 0;
+
+    private static final int EDIT = 1;
+    private static final int DELETE = 2;
+
+
 
 
     @Override
@@ -61,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AddPerson.class);
-                startActivityForResult(intent, 0);
+                startActivityForResult(intent, ADD_PERSON_RESULT_CODE);
             }
         });
 
@@ -69,21 +80,35 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 Intent intent = new Intent(MainActivity.this, ViewPerson.class);
-                intent.putExtra("ViewPerson", (Serializable) historyList.getItemIdAtPosition(pos));
-                intent.putExtra("key", pos);
+                //intent.putExtra("ViewPerson", (Serializable) historyList.getItemIdAtPosition(pos));
+                //intent.putExtra("pos", pos);
+                //startActivity(intent);
+
+                Gson gson = new Gson();
+                String person = gson.toJson(PersonList.get(pos));
+                intent.putExtra("view", person);
+                intent.putExtra("pos", pos);
                 startActivity(intent);
+                finish();
 
             }
         });
 
+        registerForContextMenu(historyList);
+        historyList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                longClickedItemIndex = i;
 
-
+                return false;
+            }
+        });
 
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 0){
+        if (requestCode == ADD_PERSON_RESULT_CODE){
             if (resultCode == MainActivity.RESULT_OK){
                 Person person = (Person)data.getExtras().getSerializable("newPerson");
                 PersonList.add(person);
@@ -92,17 +117,39 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
-
     }
+
 
     @Override
     protected void onStart(){
         super.onStart();
-
         adapter = new ArrayAdapter<Person>(this, R.layout.entry, PersonList);
         historyList.setAdapter(adapter);
         loadFromFile();
 
+    }
+
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo){
+        super.onCreateContextMenu(menu, view, menuInfo);
+
+        //menu.setHeaderTitle("Options");
+        menu.add(Menu.NONE, EDIT, menu.NONE, "Edit");
+        menu.add(Menu.NONE, DELETE, menu.NONE, "Delete");
+
+    }
+
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case EDIT:
+
+                break;
+            case DELETE:
+                PersonList.remove(longClickedItemIndex);
+                adapter.notifyDataSetChanged();
+                saveInFile();
+                break;
+        }
+        return super.onContextItemSelected(item);
     }
 
     private void loadFromFile() {

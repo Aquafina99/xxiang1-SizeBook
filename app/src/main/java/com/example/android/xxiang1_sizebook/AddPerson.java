@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -162,10 +163,17 @@ public class AddPerson extends AppCompatActivity {
     //Author: Izkata
     //From 2017-02-03 05:00
     private double toDouble(String s){
-        double d = Double.parseDouble(s);
-        DecimalFormat df = new DecimalFormat("#.00");
-        d = Double.valueOf(df.format(d));
-        return d;
+        int n = 0;
+        try {
+            double d = Double.parseDouble(s);
+            DecimalFormat df = new DecimalFormat("#.00");
+            d = Double.valueOf(df.format(d));
+            return d;
+        } catch (NumberFormatException e) {
+            Toast toast = Toast.makeText(this, "Leave data for future", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        return n;
     }
 
 
