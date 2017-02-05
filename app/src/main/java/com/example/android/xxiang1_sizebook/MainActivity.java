@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int ADD_PERSON_RESULT_CODE = 0;
 
-    private static final int EDIT = 1;
+    private static final int DELETE_PERSON_RESULT_CODE = 1;
     private static final int DELETE = 2;
 
 
@@ -117,6 +117,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
+
+        if (requestCode == DELETE_PERSON_RESULT_CODE){
+            if (resultCode == MainActivity.RESULT_OK){
+                int position = data.getIntExtra("pos", -1);
+                PersonList.remove(position);
+                adapter.notifyDataSetChanged();
+                saveInFile();
+
+            }
+        }
     }
 
 
@@ -133,16 +143,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreateContextMenu(menu, view, menuInfo);
 
         //menu.setHeaderTitle("Options");
-        menu.add(Menu.NONE, EDIT, menu.NONE, "Edit");
+        //menu.add(Menu.NONE, EDIT, menu.NONE, "Edit");
         menu.add(Menu.NONE, DELETE, menu.NONE, "Delete");
 
     }
 
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case EDIT:
+            //case EDIT:
 
-                break;
+                //break;
             case DELETE:
                 PersonList.remove(longClickedItemIndex);
                 adapter.notifyDataSetChanged();

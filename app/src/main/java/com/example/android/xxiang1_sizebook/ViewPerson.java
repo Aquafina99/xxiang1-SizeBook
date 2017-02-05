@@ -1,6 +1,7 @@
 package com.example.android.xxiang1_sizebook;
 
 import android.content.Intent;
+import android.support.v4.app.BundleCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -41,7 +42,7 @@ public class ViewPerson extends AppCompatActivity {
 
         Intent intent = getIntent();
         p = intent.getStringExtra("view");
-        pos  = intent.getIntExtra("pos", 0);
+        //pos  = intent.getIntExtra("pos", 0);
 
         Gson gson = new Gson();
         Person person = gson.fromJson(p, Person.class);
@@ -86,12 +87,15 @@ public class ViewPerson extends AppCompatActivity {
     }
 
     public void deletePerson(){
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("delete", p);
-        intent.putExtra("pos", pos);
+        Bundle bundle = getIntent().getExtras();
+        int position = bundle.getInt("pos");
+        Intent intent = new Intent();
+        //intent.putExtra("delete", p);
+        intent.putExtra("pos", position);
         setResult(MainActivity.RESULT_OK, intent);
-        startActivity(intent);
+        //startActivity(intent);
         finish();
+
 
     }
 
