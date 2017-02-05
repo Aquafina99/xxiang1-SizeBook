@@ -88,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
                 String person = gson.toJson(PersonList.get(pos));
                 intent.putExtra("view", person);
                 intent.putExtra("pos", pos);
-                startActivity(intent);
-                finish();
+                startActivityForResult(intent, DELETE_PERSON_RESULT_CODE);
+
 
             }
         });
