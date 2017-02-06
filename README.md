@@ -21,7 +21,7 @@ CMPUT301-Assignment1
 # Credits
   - [Android Developers][3]
   - [Gson][4]
-  - LonelyTweeter[5]
+  - [LonelyTweeter][5]
   - [StackOverFlow - gson-convert-from-json-to-a-typed-arraylist][6]
   - [Android - Date Picker][7]
   - [StackOverFlow -show-only-two-digit-after-decimal][8] Modified into keep 1 decimal place
