@@ -1,7 +1,6 @@
 package com.example.android.xxiang1_sizebook;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,26 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.lang.reflect.Type;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 import java.lang.*;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 public class AddPerson extends AppCompatActivity {
 
@@ -41,7 +25,7 @@ public class AddPerson extends AppCompatActivity {
 
     private EditText nameEditText;
     private EditText dateEditText;
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MMM-dd");
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private EditText neckEditText;
     private EditText bustEditText;
     private EditText chestEditText;
@@ -60,16 +44,10 @@ public class AddPerson extends AppCompatActivity {
         setContentView(R.layout.activity_add_person);
 
         // Find the views that we will need to read user input from
-        nameEditText= (EditText) findViewById(R.id.name_view);
+        nameEditText = (EditText) findViewById(R.id.name_view);
         dateEditText = (EditText) findViewById(R.id.date_view);
 
         dateEditText.setFocusable(false);
-
-
-        //dateEditText.setHint("Date (Default: " + sdf.format(addDate.getTime()) + ")");
-
-        //source: Android - Date Picker
-        // https://www.tutorialspoint.com/android/android_datepicker_control.html
         year = addDate.get(Calendar.YEAR);
         month = addDate.get(Calendar.MONTH);
         day = addDate.get(Calendar.DAY_OF_MONTH);
@@ -77,7 +55,7 @@ public class AddPerson extends AppCompatActivity {
 
         neckEditText = (EditText) findViewById(R.id.edit_neck);
         bustEditText = (EditText) findViewById(R.id.edit_bust);
-        chestEditText= (EditText) findViewById(R.id.edit_chest);
+        chestEditText = (EditText) findViewById(R.id.edit_chest);
         waistEditText = (EditText) findViewById(R.id.edit_waist);
         hipEditText = (EditText) findViewById(R.id.edit_hip);
         inseamEditText = (EditText) findViewById(R.id.edit_inseam);
@@ -97,10 +75,10 @@ public class AddPerson extends AppCompatActivity {
         });
 
 
-        doneButton.setOnClickListener(new View.OnClickListener(){
+        doneButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
-                if (view == doneButton){
+                if (view == doneButton) {
                     generateRecord();
                 }
             }
@@ -108,6 +86,7 @@ public class AddPerson extends AppCompatActivity {
 
 
     }
+
     //source: Android - Date Picker
     // https://www.tutorialspoint.com/android/android_datepicker_control.html
     private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
@@ -121,66 +100,45 @@ public class AddPerson extends AppCompatActivity {
     };
 
 
-    protected void generateRecord(){
+    protected void generateRecord() {
 
 
         Person newPerson = new Person();
 
         String name = nameEditText.getText().toString();
-        double neck = toDouble(neckEditText.getText().toString());
-        double bust = toDouble(neckEditText.getText().toString());
-        double chest = toDouble(neckEditText.getText().toString());
-        double waist = toDouble(neckEditText.getText().toString());
-        double hip = toDouble(neckEditText.getText().toString());
-        double inseam = toDouble(neckEditText.getText().toString());
-        String comment = neckEditText.getText().toString();
+        String neck = neckEditText.getText().toString();
+        String bust = bustEditText.getText().toString();
+        String chest = chestEditText.getText().toString();
+        String waist = waistEditText.getText().toString();
+        String hip = hipEditText.getText().toString();
+        String inseam = inseamEditText.getText().toString();
+        String comment = commentEditText.getText().toString();
 
 
-        if (name.isEmpty()){
+        if (name.isEmpty()) {
             nameEditText.setError("Name can't be empty");
         }
+        else {
+            newPerson.setName(name);
+            newPerson.setDate(addDate);
 
-        newPerson.setName(name);
-        newPerson.setDate(addDate);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MMM-dd");
-        newPerson.setNeck(neck);
-        newPerson.setBust(bust);
-        newPerson.setChest(chest);
-        newPerson.setWaist(waist);
-        newPerson.setHip(hip);
-        newPerson.setInseam(inseam);
-        newPerson.setComment(comment);
+            newPerson.setNeck(neck);
+            newPerson.setBust(bust);
+            newPerson.setChest(chest);
+            newPerson.setWaist(waist);
+            newPerson.setHip(hip);
+            newPerson.setInseam(inseam);
+            newPerson.setComment(comment);
 
-        Intent intent = new Intent();
-        intent.putExtra("newPerson", newPerson);
-        setResult(MainActivity.RESULT_OK, intent);
+            Intent intent = new Intent();
+            intent.putExtra("newPerson", newPerson);
+            setResult(MainActivity.RESULT_OK, intent);
 
-        finish();
-
+            finish();
         }
 
-    //http://stackoverflow.com/questions/6866633/converting-string-to-double-in-android
-    //Author: Izkata
-    //From 2017-02-03 05:00
-    private double toDouble(String s){
-        int n = 0;
-        try {
-            double d = Double.parseDouble(s);
-            DecimalFormat df = new DecimalFormat("#.00");
-            d = Double.valueOf(df.format(d));
-            return d;
-        } catch (NumberFormatException e) {
-            Toast toast = Toast.makeText(this, "Leave data for future", Toast.LENGTH_SHORT);
-            toast.show();
-        }
-        return n;
     }
 
-
-
-
-
-
-
 }
+
 

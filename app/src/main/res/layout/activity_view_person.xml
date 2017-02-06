@@ -11,6 +11,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.android.xxiang1_sizebook.ViewPerson">
 
+
+
     <!-- Name -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,8 +36,10 @@
             <TextView
                 android:id="@+id/show_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="match_parent"
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp"
+                android:elevation="0dp" />
 
         </LinearLayout>
     </LinearLayout>
@@ -65,7 +69,9 @@
                 android:id="@+id/show_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp"
+                android:elevation="0dp" />
 
         </LinearLayout>
     </LinearLayout>
@@ -88,19 +94,20 @@
             android:layout_weight="2"
             android:paddingLeft="4dp">
 
-            <!-- Input Neck -->
-
-            <!-- Units(inches) -->
-            <TextView
-                android:text="inches"
-                style="@style/UnitsStyle"/>
 
             <TextView
                 android:id="@+id/show_neck"
                 style="@style/FieldStyle"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+                 />
+            <!-- Units(inches) -->
+
+            <TextView
+                android:text="inches"
+                style="@style/UnitsStyle"
+                android:paddingBottom="22dp" />
+
         </RelativeLayout>
+
     </LinearLayout>
 
     <!-- Bust -->
@@ -129,7 +136,8 @@
             <!-- Units (inches) -->
             <TextView
                 android:text="inches"
-                style="@style/UnitsStyle"/>
+                style="@style/UnitsStyle"
+                android:paddingBottom="22dp" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -160,7 +168,8 @@
             <!-- Units (Inches) -->
             <TextView
                 android:text="inches"
-                style="@style/UnitsStyle"/>
+                style="@style/UnitsStyle"
+                android:paddingBottom="22dp" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -190,7 +199,8 @@
             <!-- Units (inches) -->
             <TextView
                 android:text="inches"
-                style="@style/UnitsStyle"/>
+                style="@style/UnitsStyle"
+                android:paddingBottom="22dp" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -220,7 +230,8 @@
             <!-- Units (inches) -->
             <TextView
                 android:text="inches"
-                style="@style/UnitsStyle"/>
+                style="@style/UnitsStyle"
+                android:paddingBottom="22dp" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -243,14 +254,19 @@
             android:paddingLeft="4dp">
 
             <!-- Inseam Input -->
-            <TextView
-                android:id="@+id/show_inseam"
-                style="@style/FieldStyle" />
 
             <!-- Units (inches) -->
+
+            <TextView
+                android:id="@+id/show_inseam"
+                style="@style/FieldStyle"
+                android:layout_alignParentStart="true" />
+
             <TextView
                 android:text="inches"
-                style="@style/UnitsStyle"/>
+                style="@style/UnitsStyle"
+                android:paddingBottom="22dp"
+                android:layout_alignParentEnd="true" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -271,14 +287,15 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:paddingLeft="4dp"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <!-- Comment Input -->
             <TextView
                 android:id="@+id/show_comment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                 />
+                android:layout_height="match_parent"
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp" />
 
         </LinearLayout>
 

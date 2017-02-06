@@ -12,7 +12,12 @@
     <TextView
         android:id="@+id/total_counts"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18dp"
+        />
 
     <ListView
         android:id="@+id/record_lists"
@@ -26,10 +31,10 @@
         android:id="@+id/add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:onClick="add_new"
         android:background="#0077CC"
         android:textColor="#FFFFFF"
+        android:fontFamily="sans-serif"
         android:text="Add" />
 
 

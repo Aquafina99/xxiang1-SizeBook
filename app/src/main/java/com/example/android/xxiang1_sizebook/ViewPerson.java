@@ -1,30 +1,26 @@
 package com.example.android.xxiang1_sizebook;
 
 import android.content.Intent;
-import android.support.v4.app.BundleCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
 import com.google.gson.Gson;
 
-import static android.R.attr.data;
 
 public class ViewPerson extends AppCompatActivity {
 
-
     String p;
-    int pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_person);
 
-        //Bundle bundle = getIntent().getExtras();
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
         TextView name = (TextView) findViewById(R.id.show_name);
         TextView date = (TextView) findViewById(R.id.show_date);
@@ -36,26 +32,26 @@ public class ViewPerson extends AppCompatActivity {
         TextView chest = (TextView) findViewById(R.id.show_chest);
         TextView comment = (TextView) findViewById(R.id.show_comment);
 
-        //Intent intent = getIntent();
-        //Person person = (Person)getIntent().getSerializableExtra("newPerson");
-        //pos = intent.getIntExtra("pos", 0);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
 
         Intent intent = getIntent();
         p = intent.getStringExtra("view");
-        //pos  = intent.getIntExtra("pos", 0);
+
 
         Gson gson = new Gson();
         Person person = gson.fromJson(p, Person.class);
 
+        Calendar getDate = person.getDate();
 
         name.setText(person.getName());
-        //date.setText(showDetials.getDate());
-        neck.setText(String.valueOf(person.getNeck()));
-        bust.setText(String.valueOf(person.getBust()));
-        waist.setText(String.valueOf(person.getWaist()));
-        hip.setText(String.valueOf(person.getHip()));
-        inseam.setText(String.valueOf(person.getInseam()));
-        chest.setText(String.valueOf(person.getChest()));
+        date.setText(sdf.format(getDate.getTime()));
+        neck.setText(person.getNeck());
+        bust.setText(person.getBust());
+        waist.setText(person.getWaist());
+        hip.setText(person.getHip());
+        inseam.setText(person.getInseam());
+        chest.setText(person.getChest());
         comment.setText(person.getComment());
 
     }
@@ -69,31 +65,20 @@ public class ViewPerson extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.edit){
-            editPerson();
-        }
         if(item.getItemId() == R.id.delete){
             deletePerson();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void editPerson(){
-        Intent intent = new Intent(this, EditPerson.class);
-        intent.putExtra("edit", p);
-        intent .putExtra("pos", pos);
-        startActivity(intent);
-        finish();
-    }
+
 
     public void deletePerson(){
         Bundle bundle = getIntent().getExtras();
         int position = bundle.getInt("pos");
         Intent intent = new Intent();
-        //intent.putExtra("delete", p);
         intent.putExtra("pos", position);
         setResult(MainActivity.RESULT_OK, intent);
-        //startActivity(intent);
         finish();
 
 

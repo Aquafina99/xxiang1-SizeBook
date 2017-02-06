@@ -6,22 +6,20 @@ import java.util.Calendar;
  * Created by ceciliaxiang on 2017-01-31.
  */
 
-public class Person implements Serializable{
+public class Person implements Serializable {
     private String name;
-    private  Calendar date;
-    private double neck;
-    private double bust;
-    private double chest;
-    private double waist;
-    private double hip;
-    private double inseam;
+    private Calendar date;
+    private String neck;
+    private String bust;
+    private String chest;
+    private String waist;
+    private String hip;
+    private String inseam;
     private String comment;
 
-    public Person(){
+    public Person() {
 
     }
-
-
 
     public String getName() {
         return name;
@@ -39,52 +37,52 @@ public class Person implements Serializable{
         this.date = date;
     }
 
-    public double getNeck() {
+    public String getNeck() {
         return neck;
     }
 
-    public void setNeck(double neck) {
-        this.neck = neck;
+    public void setNeck(String neck) {
+        this.neck = oneDecimal(neck);
     }
 
-    public double getBust() {
+    public String getBust() {
         return bust;
     }
 
-    public void setBust(double bust) {
-        this.bust = bust;
+    public void setBust(String bust) {
+        this.bust = oneDecimal(bust);
     }
 
-    public double getChest() {
+    public String getChest() {
         return chest;
     }
 
-    public void setChest(double chest) {
-        this.chest = chest;
+    public void setChest(String chest) {
+        this.chest = oneDecimal(chest);
     }
 
-    public double getWaist() {
+    public String getWaist() {
         return waist;
     }
 
-    public void setWaist(double waist) {
-        this.waist = waist;
+    public void setWaist(String waist) {
+        this.waist = oneDecimal(waist);
     }
 
-    public double getHip() {
+    public String getHip() {
         return hip;
     }
 
-    public void setHip(double hip) {
-        this.hip = hip;
+    public void setHip(String hip) {
+        this.hip = oneDecimal(hip);
     }
 
-    public double getInseam() {
+    public String getInseam() {
         return inseam;
     }
 
-    public void setInseam(double inseam) {
-        this.inseam = inseam;
+    public void setInseam(String inseam) {
+        this.inseam = oneDecimal(inseam);
     }
 
     public String getComment() {
@@ -94,6 +92,22 @@ public class Person implements Serializable{
     public void setComment(String comment) {
         this.comment = comment;
     }
+
+
+
+    //taken from http://stackoverflow.com/questions/10959424/show-only-two-digit-after-decimal
+    //by: dumazy, bluish
+    //modified to 1 decimal
+
+    public String oneDecimal(String s){
+        if (s.isEmpty()){
+            return s;
+        }
+        double num = Double.parseDouble(s);
+        String ss = String.format("%.1f", num);
+        return ss;
+    }
+
 
     @Override
     public String toString(){

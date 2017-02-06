@@ -9,7 +9,7 @@
     </style>
 
 
-    <!-- Style for a category in the editor -->
+    <!-- Style for a category in the add/edit person -->
     <style name="CategoryStyle">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">0dp</item>
@@ -22,7 +22,7 @@
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
 
-    <!-- Style for field in the activity_editor -->
+    <!-- Style for field in the add_edit person -->
     <style name="FieldStyle">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
@@ -30,14 +30,13 @@
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
 
-    <!-- Style for unit (inches) in activity_editor -->
+    <!-- Style for unit (inches) in add/edit person -->
     <style name="UnitsStyle">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:paddingRight">16dp</item>
-        <item name="android:paddingTop">16dp</item>
-        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingTop">6dp</item>
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
 

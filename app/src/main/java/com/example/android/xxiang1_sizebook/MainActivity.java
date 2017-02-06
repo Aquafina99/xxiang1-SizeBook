@@ -2,12 +2,16 @@ package com.example.android.xxiang1_sizebook;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.icu.text.AlphabeticIndex;
+import android.icu.text.RelativeDateTimeFormatter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import java.io.BufferedReader;
@@ -18,26 +22,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Calendar;
-
-import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import static android.os.Build.VERSION_CODES.M;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String FILENAME = "file.sav";
 
     private ListView historyList;
+    private TextView totalCounts;
 
     int longClickedItemIndex;
     private ArrayList<Person> PersonList = new ArrayList<>();
@@ -53,8 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int ADD_PERSON_RESULT_CODE = 0;
 
     private static final int DELETE_PERSON_RESULT_CODE = 1;
-    private static final int DELETE = 2;
-
+    private static final int EDIT = 2;
 
 
 
@@ -63,8 +58,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //total counts
+        totalCounts = (TextView) findViewById(R.id.total_counts);
+
         //list view for all history record
         historyList = (ListView) findViewById(R.id.record_lists);
+
 
         //set up Add Button to open AddPerson Activity
         Button addNew = (Button) findViewById(R.id.add);
@@ -80,9 +79,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 Intent intent = new Intent(MainActivity.this, ViewPerson.class);
-                //intent.putExtra("ViewPerson", (Serializable) historyList.getItemIdAtPosition(pos));
-                //intent.putExtra("pos", pos);
-                //startActivity(intent);
 
                 Gson gson = new Gson();
                 String person = gson.toJson(PersonList.get(pos));
@@ -106,6 +102,41 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        adapter = new ArrayAdapter<Person>(this, R.layout.entry, PersonList);
+        historyList.setAdapter(adapter);
+        loadFromFile();
+        totalCounts.setText(String.format("Total Records:  %s", PersonList.size()));
+
+    }
+
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo){
+        super.onCreateContextMenu(menu, view, menuInfo);
+        menu.add(Menu.NONE, EDIT, menu.NONE, "Edit");
+
+    }
+
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case EDIT:
+
+                Intent intent = new Intent(MainActivity.this, EditPerson.class);
+                Gson gson = new Gson();
+                String person = gson.toJson(PersonList.get(longClickedItemIndex));
+                intent.putExtra("edit", person);
+                intent.putExtra("pos", PersonList.get(longClickedItemIndex));
+                startActivityForResult(intent, EDIT);
+                saveInFile();
+                break;
+
+        }
+        return super.onContextItemSelected(item);
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ADD_PERSON_RESULT_CODE){
@@ -124,42 +155,18 @@ public class MainActivity extends AppCompatActivity {
                 PersonList.remove(position);
                 adapter.notifyDataSetChanged();
                 saveInFile();
-
             }
         }
-    }
-
-
-    @Override
-    protected void onStart(){
-        super.onStart();
-        adapter = new ArrayAdapter<Person>(this, R.layout.entry, PersonList);
-        historyList.setAdapter(adapter);
-        loadFromFile();
-
-    }
-
-    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo){
-        super.onCreateContextMenu(menu, view, menuInfo);
-
-        //menu.setHeaderTitle("Options");
-        //menu.add(Menu.NONE, EDIT, menu.NONE, "Edit");
-        menu.add(Menu.NONE, DELETE, menu.NONE, "Delete");
-
-    }
-
-    public boolean onContextItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            //case EDIT:
-
-                //break;
-            case DELETE:
-                PersonList.remove(longClickedItemIndex);
+        if (requestCode == EDIT) {
+            if (resultCode == MainActivity.RESULT_OK) {
+                Person person = (Person)data.getExtras().getSerializable("editPerson");
+                int position = data.getIntExtra("position", -1);
+                PersonList.add(person);
+                PersonList.remove(position);
                 adapter.notifyDataSetChanged();
                 saveInFile();
-                break;
+            }
         }
-        return super.onContextItemSelected(item);
     }
 
     private void loadFromFile() {
@@ -204,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
             throw new RuntimeException();
         }
     }
+
 
 
 }
