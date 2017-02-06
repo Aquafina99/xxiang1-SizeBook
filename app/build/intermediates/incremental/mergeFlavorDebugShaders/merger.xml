@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/Users/ceciliaxiang/xxiang1-SizeBook/app/src/main/shaders"/></dataSet><dataSet config="flavor"><source path="/Users/ceciliaxiang/xxiang1-SizeBook/app/src/flavor/shaders"/></dataSet><dataSet config="debug"><source path="/Users/ceciliaxiang/xxiang1-SizeBook/app/src/debug/shaders"/></dataSet><dataSet config="flavorDebug"><source path="/Users/ceciliaxiang/xxiang1-SizeBook/app/src/flavorDebug/shaders"/></dataSet></merger>

@@ -33,7 +33,7 @@ public class AddPerson extends AppCompatActivity {
     private EditText nameEditText;
     private EditText dateEditText;
     /**
-     * The Sdf.
+     * The sdf is 
      */
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private EditText neckEditText;
@@ -113,7 +113,9 @@ public class AddPerson extends AppCompatActivity {
 
 
     /**
-     * Generate record.
+     * Generate record for new added person;
+     get input from user and set them to
+     corresponding views.
      */
     protected void generateRecord() {
 
