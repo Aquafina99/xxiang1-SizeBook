@@ -1,10 +1,12 @@
 package com.example.android.xxiang1_sizebook;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import com.google.gson.Gson;
 
@@ -14,6 +16,9 @@ import java.util.Calendar;
 public class EditPerson extends AppCompatActivity {
 
     String p;
+    int year, month, day;
+    private EditText editDate;
+    private Calendar dateEditor = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +55,28 @@ public class EditPerson extends AppCompatActivity {
         final EditText comment = (EditText) findViewById(R.id.comment_edit);
         comment.setText(person.getComment());
 
-        final EditText editDate = (EditText) findViewById(R.id.date_edit);
+        editDate = (EditText) findViewById(R.id.date_edit);
+        editDate.setFocusable(false);
         editDate.setText(sdf.format(date.getTime()));
 
-        Button saveButton = (Button) findViewById(R.id.Save);
+        editDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(EditPerson.this, myDateListener,
+                        year, day,
+                        day).show();
+            }
+        });
 
+        year = date.get(Calendar.YEAR);
+        month = date.get(Calendar.MONTH);
+        day = date.get(Calendar.DAY_OF_MONTH);
+
+        Button saveButton = (Button) findViewById(R.id.Save);
         saveButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+
                 if (nameField.getText().toString().isEmpty()){
                     nameField.setError("Name can't be empty");
                 }
@@ -71,8 +90,7 @@ public class EditPerson extends AppCompatActivity {
                     person.setInseam(inseam.getText().toString());
                     person.setChest(chest.getText().toString());
                     person.setComment(comment.getText().toString());
-
-                    //person.setDate(date.getTime());
+                    person.setDate(dateEditor);
 
                     Intent intent = new Intent();
                     intent.putExtra("editPerson", person);
@@ -85,4 +103,15 @@ public class EditPerson extends AppCompatActivity {
         });
 
     }
+
+    private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            dateEditor.set(Calendar.YEAR, year);
+            dateEditor.set(Calendar.MONTH, monthOfYear);
+            dateEditor.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            editDate.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+        }
+    };
+
 }
