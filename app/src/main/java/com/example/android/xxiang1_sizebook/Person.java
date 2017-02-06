@@ -209,6 +209,21 @@ public class Person implements Serializable {
 
     @Override
     public String toString(){
-        return this.name;
+        String output = name +" ";
+
+        if (!bust.isEmpty()){
+            output += "B: " + bust + " ";
+        }
+        if (!chest.isEmpty()){
+            output += "C: " + chest + " ";
+        }
+        if (!waist.isEmpty()){
+            output += "W: " + waist + " ";
+        }
+
+        if (!inseam.isEmpty()){
+            output += "I: " + inseam;
+        }
+        return output;
     }
 }

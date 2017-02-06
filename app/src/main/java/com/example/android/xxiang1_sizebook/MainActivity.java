@@ -177,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Taken from Lonely Tweeter: https://github.com/Aquafina99/lonelyTwitter
     // 2017-02-02 23:30
+    //Retrieves JSON data from file and store in PersonList
     private void loadFromFile() {
         try {
             FileInputStream fis = openFileInput(FILENAME);

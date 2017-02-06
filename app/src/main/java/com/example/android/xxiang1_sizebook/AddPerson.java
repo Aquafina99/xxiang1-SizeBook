@@ -33,7 +33,7 @@ public class AddPerson extends AppCompatActivity {
     private EditText nameEditText;
     private EditText dateEditText;
     /**
-     * The sdf is 
+     * The sdf is
      */
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private EditText neckEditText;
