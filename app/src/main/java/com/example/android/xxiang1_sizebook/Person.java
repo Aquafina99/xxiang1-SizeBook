@@ -206,7 +206,9 @@ public class Person implements Serializable {
         return ss;
     }
 
-
+    /**
+     * show on personList the name and other fields if available
+     */
     @Override
     public String toString(){
         String output = name +" ";

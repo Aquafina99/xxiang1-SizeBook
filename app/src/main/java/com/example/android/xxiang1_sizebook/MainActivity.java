@@ -33,10 +33,9 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import static android.R.attr.data;
 
-/**
- * The type Main activity.
- */
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -63,14 +62,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //total counts
+        //total counts to show number of current records
         totalCounts = (TextView) findViewById(R.id.total_counts);
 
-        //list view for all history record
+        //list view for all records
         historyList = (ListView) findViewById(R.id.record_lists);
 
 
-        //set up Add Button to open AddPerson Activity
+        //Add Button to open AddPerson Activity
         Button addNew = (Button) findViewById(R.id.add);
         addNew.setOnClickListener(new View.OnClickListener() {
 
@@ -80,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //click item to go to ViewPerson activity, where you can view details of selected item;
         historyList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
@@ -124,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //Go to EditPerson activity if long clicked item
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case EDIT_PERSON_RESULT_CODE:
@@ -177,7 +178,10 @@ public class MainActivity extends AppCompatActivity {
 
     //Taken from Lonely Tweeter: https://github.com/Aquafina99/lonelyTwitter
     // 2017-02-02 23:30
-    //Retrieves JSON data from file and store in PersonList
+
+    /**
+     * Retrieves JSON data from file and store in PersonList
+     */
     private void loadFromFile() {
         try {
             FileInputStream fis = openFileInput(FILENAME);
@@ -205,6 +209,9 @@ public class MainActivity extends AppCompatActivity {
 
     //Taken from Lonely Tweeter: https://github.com/Aquafina99/lonelyTwitter
     // 2017-02-02 23:30
+    /**
+     * Store PersonList data as JSON format to file
+     */
     private void saveInFile() {
         try {
             FileOutputStream fos = openFileOutput(FILENAME,

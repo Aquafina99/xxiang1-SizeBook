@@ -16,24 +16,21 @@ import java.lang.*;
 
 
 /**
- * The type Add person.
+ * This activity responsible for creating person object
  */
 public class AddPerson extends AppCompatActivity {
 
 
-    /**
-     * The Person.
-     */
     Person person = new Person();
 
     private ArrayList<Person> PersonList = new ArrayList<>();
 
     private Calendar addDate = Calendar.getInstance();
-
     private EditText nameEditText;
     private EditText dateEditText;
+
     /**
-     * The sdf is
+     * sfd is a simperDateFormart of yyyy-mm-dd formart of date
      */
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private EditText neckEditText;

@@ -14,6 +14,10 @@ import com.google.gson.Gson;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+
+/**
+ * This activity responsible for editing person object
+ */
 public class EditPerson extends AppCompatActivity {
 
     String entry;

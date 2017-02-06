@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Mon Feb 06 13:37:40 MST 2017
+#Mon Feb 06 14:22:42 MST 2017
 210.set=ANDROID_RESOURCE
 14.set=ANDROID_RESOURCE
 180.file=/Users/ceciliaxiang/xxiang1-SizeBook/app/build/intermediates/res/resources-flavor-debug.ap_/res/color/abc_search_url_text.xml

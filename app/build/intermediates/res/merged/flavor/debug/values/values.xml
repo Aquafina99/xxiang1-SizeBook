@@ -27,7 +27,7 @@
     <color name="bright_foreground_material_light">@android:color/black</color>
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
-    <color name="colorAccent">#CCEAFF</color>
+    <color name="colorAccent">#0077CC</color>
     <color name="colorPrimary">#0077CC</color>
     <color name="colorPrimaryDark">#0077CC</color>
     <color name="design_fab_shadow_end_color">@android:color/transparent</color>

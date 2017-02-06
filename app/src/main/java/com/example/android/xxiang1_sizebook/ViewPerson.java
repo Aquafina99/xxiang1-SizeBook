@@ -12,15 +12,11 @@ import java.util.Calendar;
 
 import com.google.gson.Gson;
 
-
 /**
- * The type View person.
+ * This activity responsible for view person object.
  */
 public class ViewPerson extends AppCompatActivity {
 
-    /**
-     * The P.
-     */
     String entry;
 
     @Override
