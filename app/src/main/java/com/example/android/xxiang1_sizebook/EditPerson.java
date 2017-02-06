@@ -20,10 +20,13 @@ public class EditPerson extends AppCompatActivity {
     private EditText editDate;
     private Calendar dateEditor = Calendar.getInstance();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_person);
+
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
         Bundle bundle = getIntent().getExtras();
         final int position = bundle.getInt("pos");

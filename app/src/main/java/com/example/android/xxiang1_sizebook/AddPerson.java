@@ -43,6 +43,8 @@ public class AddPerson extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_person);
 
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+
         // Find the views that we will need to read user input from
         nameEditText = (EditText) findViewById(R.id.name_view);
         dateEditText = (EditText) findViewById(R.id.date_view);
