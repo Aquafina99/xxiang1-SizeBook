@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
@@ -15,7 +16,7 @@ import java.util.Calendar;
 
 public class EditPerson extends AppCompatActivity {
 
-    String p;
+    String entry;
     int year, month, day;
     private EditText editDate;
     private Calendar dateEditor = Calendar.getInstance();
@@ -32,9 +33,9 @@ public class EditPerson extends AppCompatActivity {
         final int position = bundle.getInt("pos");
 
         Intent intent = getIntent();
-        p = intent.getStringExtra("edit");
+        entry = intent.getStringExtra("edit");
         Gson gson = new Gson();
-        final Person person = gson.fromJson(p, Person.class);
+        final Person person = gson.fromJson(entry, Person.class);
 
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         final Calendar date = person.getDate();
@@ -76,15 +77,13 @@ public class EditPerson extends AppCompatActivity {
         day = date.get(Calendar.DAY_OF_MONTH);
 
         Button saveButton = (Button) findViewById(R.id.Save);
-        saveButton.setOnClickListener(new View.OnClickListener(){
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
 
-                if (nameField.getText().toString().isEmpty()){
+                if (nameField.getText().toString().isEmpty()) {
                     nameField.setError("Name can't be empty");
-                }
-
-                else {
+                } else {
                     person.setName(nameField.getText().toString());
                     person.setNeck(neck.getText().toString());
                     person.setBust(bust.getText().toString());

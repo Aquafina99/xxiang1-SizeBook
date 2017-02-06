@@ -6,14 +6,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
 import com.google.gson.Gson;
 
 
+/**
+ * The type View person.
+ */
 public class ViewPerson extends AppCompatActivity {
 
-    String p;
+    /**
+     * The P.
+     */
+    String entry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +44,11 @@ public class ViewPerson extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        p = intent.getStringExtra("view");
+        entry = intent.getStringExtra("view");
 
 
         Gson gson = new Gson();
-        Person person = gson.fromJson(p, Person.class);
+        Person person = gson.fromJson(entry, Person.class);
 
         Calendar getDate = person.getDate();
 
@@ -65,15 +73,17 @@ public class ViewPerson extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.delete){
+        if (item.getItemId() == R.id.delete) {
             deletePerson();
         }
         return super.onOptionsItemSelected(item);
     }
 
 
-
-    public void deletePerson(){
+    /**
+     * Delete person.
+     */
+    public void deletePerson() {
         Bundle bundle = getIntent().getExtras();
         int position = bundle.getInt("pos");
         Intent intent = new Intent();
@@ -83,8 +93,6 @@ public class ViewPerson extends AppCompatActivity {
 
 
     }
-
-
 
 
 }

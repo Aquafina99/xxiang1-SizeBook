@@ -1,19 +1,17 @@
 package com.example.android.xxiang1_sizebook;
 
-import android.content.DialogInterface;
+
 import android.content.Intent;
-import android.graphics.Color;
-import android.icu.text.AlphabeticIndex;
-import android.icu.text.RelativeDateTimeFormatter;
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
-import android.view.LayoutInflater;
+
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
+
 import android.widget.AdapterView;
-import android.widget.EditText;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -24,16 +22,21 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+
 import android.content.Context;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 
+/**
+ * The type Main activity.
+ */
 public class MainActivity extends AppCompatActivity {
 
 
@@ -42,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
     private ListView historyList;
     private TextView totalCounts;
 
+    /**
+     * The Long clicked item index.
+     */
     int longClickedItemIndex;
     private ArrayList<Person> PersonList = new ArrayList<>();
     private ArrayAdapter<Person> adapter;
@@ -49,8 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int ADD_PERSON_RESULT_CODE = 0;
 
     private static final int DELETE_PERSON_RESULT_CODE = 1;
-    private static final int EDIT = 2;
-
+    private static final int EDIT_PERSON_RESULT_CODE = 2;
 
 
     @Override
@@ -67,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         //set up Add Button to open AddPerson Activity
         Button addNew = (Button) findViewById(R.id.add);
-        addNew.setOnClickListener(new View.OnClickListener(){
+        addNew.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AddPerson.class);
@@ -104,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         adapter = new ArrayAdapter<Person>(this, R.layout.entry, PersonList);
         historyList.setAdapter(adapter);
@@ -113,22 +118,22 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo){
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, view, menuInfo);
-        menu.add(Menu.NONE, EDIT, menu.NONE, "Edit");
+        menu.add(Menu.NONE, EDIT_PERSON_RESULT_CODE, menu.NONE, "Edit");
 
     }
 
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case EDIT:
+            case EDIT_PERSON_RESULT_CODE:
 
                 Intent intent = new Intent(MainActivity.this, EditPerson.class);
                 Gson gson = new Gson();
                 String person = gson.toJson(PersonList.get(longClickedItemIndex));
                 intent.putExtra("edit", person);
                 intent.putExtra("pos", PersonList.get(longClickedItemIndex));
-                startActivityForResult(intent, EDIT);
+                startActivityForResult(intent, EDIT_PERSON_RESULT_CODE);
                 saveInFile();
                 break;
 
@@ -139,9 +144,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ADD_PERSON_RESULT_CODE){
-            if (resultCode == MainActivity.RESULT_OK){
-                Person person = (Person)data.getExtras().getSerializable("newPerson");
+        if (requestCode == ADD_PERSON_RESULT_CODE) {
+            if (resultCode == MainActivity.RESULT_OK) {
+                Person person = (Person) data.getExtras().getSerializable("newPerson");
                 PersonList.add(person);
                 adapter.notifyDataSetChanged();
                 saveInFile();
@@ -149,17 +154,17 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        if (requestCode == DELETE_PERSON_RESULT_CODE){
-            if (resultCode == MainActivity.RESULT_OK){
+        if (requestCode == DELETE_PERSON_RESULT_CODE) {
+            if (resultCode == MainActivity.RESULT_OK) {
                 int position = data.getIntExtra("pos", -1);
                 PersonList.remove(position);
                 adapter.notifyDataSetChanged();
                 saveInFile();
             }
         }
-        if (requestCode == EDIT) {
+        if (requestCode == EDIT_PERSON_RESULT_CODE) {
             if (resultCode == MainActivity.RESULT_OK) {
-                Person person = (Person)data.getExtras().getSerializable("editPerson");
+                Person person = (Person) data.getExtras().getSerializable("editPerson");
                 int position = data.getIntExtra("position", -1);
                 PersonList.add(person);
                 PersonList.remove(position);
@@ -179,7 +184,8 @@ public class MainActivity extends AppCompatActivity {
             //Taken from http://stackoverflow.com/questions/12384064/gson-convert-from-json-to-a-typed-arraylistt
             // 2017-02-02 23:36
 
-            Type listType = new TypeToken<ArrayList<Person>>(){}.getType();
+            Type listType = new TypeToken<ArrayList<Person>>() {
+            }.getType();
             PersonList = gson.fromJson(in, listType);
             adapter.clear();
             adapter.addAll(PersonList);
@@ -211,7 +217,6 @@ public class MainActivity extends AppCompatActivity {
             throw new RuntimeException();
         }
     }
-
 
 
 }

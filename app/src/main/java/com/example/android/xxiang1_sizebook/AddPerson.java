@@ -8,15 +8,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+
 import java.util.Calendar;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 import java.lang.*;
 
 
+/**
+ * The type Add person.
+ */
 public class AddPerson extends AppCompatActivity {
 
 
+    /**
+     * The Person.
+     */
     Person person = new Person();
 
     private ArrayList<Person> PersonList = new ArrayList<>();
@@ -25,6 +32,9 @@ public class AddPerson extends AppCompatActivity {
 
     private EditText nameEditText;
     private EditText dateEditText;
+    /**
+     * The Sdf.
+     */
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private EditText neckEditText;
     private EditText bustEditText;
@@ -102,6 +112,9 @@ public class AddPerson extends AppCompatActivity {
     };
 
 
+    /**
+     * Generate record.
+     */
     protected void generateRecord() {
 
 
@@ -119,8 +132,7 @@ public class AddPerson extends AppCompatActivity {
 
         if (name.isEmpty()) {
             nameEditText.setError("Name can't be empty");
-        }
-        else {
+        } else {
             newPerson.setName(name);
             newPerson.setDate(addDate);
 
